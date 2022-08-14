@@ -3,26 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="App description">
+    <meta name="description" content="An app to build and manage lists of tasks.">
     <title>{{ config('app.name') }}</title>
     <link rel="canonical"
           href="{{ url()->current() }}"/>
-    @if(app()->environment('production'))
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('google-analytics.id') }}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || []
-
-            function gtag () {
-                dataLayer.push(arguments)
-            }
-
-            gtag('js', new Date())
-
-            gtag('config', {{ config('google-analytics.id') }})
-        </script>
-    @endif
-    @vite('resources/js/app.js')
+    @vite('resources/app/js/main.js')
 </head>
 <body class="antialiased">
 <div id="app">

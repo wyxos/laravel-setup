@@ -114,7 +114,7 @@ export default async function setup(){
       destination = ''
     }
 
-    source = path.resolve(__dirname, `stubs/${source}`)
+    source = path.resolve(__dirname, '..', `stubs/${source}`)
 
     destination = `${projectPath}/${destination}`
 
@@ -179,9 +179,7 @@ export default async function setup(){
 
   commit('feat: configured ui')
 
-  copy('resources/scss')
-  copy('resources/js')
-  copy('resources/views')
+  copy('resources')
 
   addDevDependencies([
     {'@wyxos/vue-3-helpers': 'github:wyxos/vue-3-helpers'},
