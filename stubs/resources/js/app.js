@@ -1,8 +1,11 @@
 import setup from './setup'
 
 setup({
+  mounted() {
+    window.axios.get('/api/test')
+  },
   methods: {
-    helloWorld () {
+    helloWorld() {
       alert('Hello World!')
     }
   }

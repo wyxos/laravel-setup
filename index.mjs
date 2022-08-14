@@ -109,6 +109,10 @@ const copy = (source, destination) => {
   return fse.copySync(path.resolve(__dirname, `stubs/${source}`), `${projectPath}/${destination}`, { overwrite: true })
 }
 
+const appendFile = (location, data) => {
+  fs.appendFileSync(path.resolve(projectPath, location), data)
+}
+
 const processPath = process.cwd()
 
 console.log(processPath)
@@ -243,7 +247,17 @@ commit('feat: configured lint')
 
 if (npmInstall) {
   npm('i')
+
+  npm('update --save')
+
+  commit('feat: installed node dependencies')
 }
+
+appendFile('.env', '\nSESSION_SECURE_COOKIE=true')
+
+appendFile('routes/api.php', '\nRoute::get(\'/test\', function () {\n' +
+  '    return \'Hello World!\';\n' +
+  '});')
 
 // SETUP DEV ENVIRONMENT
 
