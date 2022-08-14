@@ -16,5 +16,9 @@ A script to scaffold a Laravel project with the following:
   - Wyxos Laravel Resources
 
 ## Usage
-``` npx github:wyxos/laravel-setup ```
+Run inside homestead ``` npx wyxos/laravel-setup ```
+
+After scaffolding, run ``` npx wyxos/laravel-setup --windows``` from your project root in cmd to alter yaml and host file.
+
+
     
