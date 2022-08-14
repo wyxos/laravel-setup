@@ -7,8 +7,12 @@ import path from 'path'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import fse from 'fs-extra'
+import chalk from 'chalk';
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const success = (message) => console.log(chalk.green(message))
+const warn = (message) => console.log(chalk.yellow(message))
 
 const packageJson = {
   "private": true,
@@ -30,6 +34,8 @@ const packageJson = {
 }
 
 const updateDependencies = (deps, key = 'dependencies') => {
+  warn('adding node dependencies...')
+
   deps.forEach(dep => {
     if(typeof dep === 'object'){
       packageJson[key][Object.keys(dep)[0]] = dep[Object.keys(dep)[0]]
@@ -37,6 +43,8 @@ const updateDependencies = (deps, key = 'dependencies') => {
       packageJson[key][dep] = 'latest'
     }
   })
+
+  success('package.json updated')
 
   writePackageJson()
 }
@@ -66,7 +74,7 @@ const ask = async (question, defaultAnswer) => {
   return answer
 }
 
-const confirm = async (question, defaultAnswer = 'y') => {
+const confirm = async (question, defaultAnswer = true) => {
   const { answer } = await inquirer.prompt([
     {
       type: 'confirm',
@@ -84,18 +92,20 @@ const execSyncOut = (command) => {
 }
 
 const git = (command) => {
-  return execSyncOut(`git --work-tree="${projectPath}" --git-dir="${projectPath}/.git" ${command}`)
+  return execSync(`git --work-tree="${projectPath}" --git-dir="${projectPath}/.git" ${command}`, { stdio: [] })
 }
 
 const npm = (command) => {
-  return execSyncOut(`npm -C ${projectPath} ${command}`)
+  return execSync(`npm -C ${projectPath} ${command}`, { stdio: [] })
 }
 
 const stageFiles = () => {
-  git('add .')
+  git('add .', {stdio : 'pipe' })
 }
 
 const commit = (message) => {
+  warn(`commit with message "${message}"...`)
+
   stageFiles()
 
   git(`commit -m="${message}"`)
@@ -108,23 +118,37 @@ const copy = (source, destination) => {
     destination = ''
   }
 
-  return fse.copySync(path.resolve(__dirname, `stubs/${source}`), `${projectPath}/${destination}`, { overwrite: true })
+  source = path.resolve(__dirname, `stubs/${source}`)
+
+  destination = `${projectPath}/${destination}`
+
+  fse.copySync(source, destination, { overwrite: true })
+
+  success(`copied \n--- ${source} \n--- -> ${destination}`)
 }
 
 const appendFile = (location, data) => {
   fs.appendFileSync(path.resolve(projectPath, location), data)
 }
 
+const replaceString = (location, pattern, replacement) => {
+  let data = fs.readFileSync(path.resolve(projectPath, location)).toString()
+
+  data = data.replace(pattern, replacement)
+
+  fs.writeFileSync(path.resolve(projectPath, location), data)
+}
+
+function installLaravel () {
+  warn('installing Laravel...')
+
+  execSync(`laravel new ${projectName}`, { stdio: [] })
+}
+
 const processPath = process.cwd()
 
-console.log(processPath)
-
-// SETUP LARAVEL
-
-// ask for app name
 const projectName = await ask('Name of the project?', 'my-app')
 
-// verify if folder exists
 const projectPath = path.resolve(processPath, projectName)
 
 const pathExists = fs.existsSync(projectPath)
@@ -133,70 +157,29 @@ const removePath = pathExists ? await confirm('The project already exists. Do yo
 
 const initialCommit = await confirm('Perform initial commit?')
 
-const npmInstall = await confirm('Run "npm install"?', 'n')
+const npmInstall = await confirm('Run "npm install"?', false)
 
 if (removePath) {
-// if exists, request if to delete or skip setup
-
-  // if delete, delete then proceed
-
-  // run laravel new $appName
-  execSyncOut(`rm -R ${projectName}`)
-
-  execSyncOut(`laravel new ${projectName}`)
-
-  // if skip, proceed
-} else {
-// if not exist, run laravel new $appName
-  execSyncOut(`laravel new ${projectName}`)
+  execSync(`rm -R ${projectName}`, { stdio: [] })
 }
 
-// SETUP GIT
+installLaravel()
 
-// run git init inside the project
+warn('Initializing git...')
 
 git('init')
 
-// update gitignore to include composer lock
-
-// stage all files
-
 if (initialCommit) {
-// add commit message
-
   commit('feat: initial commit')
 }
 
-// ask for remote repository
-
-// if provided, push to remote repository
-
-// SETUP VITEJS + VUE + ORUGA + BULMA
-
-// update package.json
-
-// npm('install --save vite laravel-vite-plugin vite-plugin-mkcert @vitejs/plugin-vue')
-addDevDependencies([
-  'laravel-vite-plugin',
-  'vite-plugin-mkcert',
-  '@vitejs/plugin-vue'
-])
-
-// update vite.config.js
+addDevDependencies('laravel-vite-plugin vite-plugin-mkcert @vitejs/plugin-vue'.split(' '))
 
 copy('vite.config.js')
 
 commit('feat: configured vite')
 
-// install oruga and bulma
-// npm(`install --save vue @oruga-ui/oruga-next @oruga-ui/theme-bulma sass sass-loader`)
-addDevDependencies([
-  'vue',
-  '@oruga-ui/oruga-next',
-  '@oruga-ui/theme-bulma',
-  'sass',
-  'sass-loader',
-])
+addDevDependencies('vue @oruga-ui/oruga-next @oruga-ui/theme-bulma sass sass-loader'.split(' '))
 
 commit('feat: configured ui')
 
@@ -204,17 +187,12 @@ copy('resources/scss')
 copy('resources/js')
 copy('resources/views')
 
-// Install wyxos vue helpers
-
-// npm(`install --save @wyxos/vue-3-helpers`)
 addDevDependencies([
   {'@wyxos/vue-3-helpers': 'github:wyxos/vue-3-helpers'},
 ])
 
 commit('feat: resources structure')
 
-// install eslint
-// npm(`install --save eslint eslint-config-prettier eslint-config-standard eslint-plugin-import eslint-plugin-json eslint-plugin-n eslint-plugin-node eslint-plugin-promise eslint-plugin-vue prettier @prettier/plugin-php`)
 addDevDependencies('eslint eslint-config-prettier eslint-config-standard eslint-plugin-import eslint-plugin-json eslint-plugin-n eslint-plugin-node eslint-plugin-promise eslint-plugin-vue prettier @prettier/plugin-php'.split(' '))
 
 copy('lint', '/')
@@ -260,6 +238,10 @@ appendFile('.env', '\nSESSION_SECURE_COOKIE=true')
 appendFile('routes/api.php', '\nRoute::get(\'/test\', function () {\n' +
   '    return \'Hello World!\';\n' +
   '});')
+
+commit('feat: secure session + test route')
+
+replaceString('.env', /APP_URL=.*/, `APP_DOMAIN=${projectName}.test\nAPP_URL=https://\${APP_DOMAIN}`)
 
 // SETUP DEV ENVIRONMENT
 
