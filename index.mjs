@@ -243,5 +243,7 @@ commit('feat: secure session + test route')
 
 replaceString('.env', /APP_URL=.*/, `APP_DOMAIN=${projectName}.test\nAPP_URL=https://\${APP_DOMAIN}`)
 
+success('scaffold complete.')
+
 // SETUP DEV ENVIRONMENT
 
