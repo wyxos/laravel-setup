@@ -5,13 +5,10 @@ import path from 'path'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import fse from 'fs-extra'
-import chalk from 'chalk';
+import { success, warn } from './helpers.js'
 
 export default async function setup(){
   const __dirname = dirname(fileURLToPath(import.meta.url))
-
-  const success = (message) => console.log(chalk.green(message))
-  const warn = (message) => console.log(chalk.yellow(message))
 
   const packageJson = {
     "private": true,
@@ -242,7 +239,7 @@ export default async function setup(){
 
   replaceString('.env', /APP_URL=.*/, `APP_DOMAIN=${projectName}.test\nAPP_URL=https://\${APP_DOMAIN}`)
 
-  success('scaffold complete.')
+  success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
 
 // SETUP DEV ENVIRONMENT
 }
