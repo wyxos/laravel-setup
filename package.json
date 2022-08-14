@@ -14,5 +14,8 @@
   "dependencies": {
     "fs-extra": "^10.1.0",
     "inquirer": "^9.1.0"
+  },
+  "bin": {
+    "laravel-setup": "./index.mjs"
   }
 }
