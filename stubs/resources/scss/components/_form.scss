@@ -1,0 +1,76 @@
+/**
+ * Bulma Forms
+ * @see https://bulma.io/documentation/components/form/
+ */
+
+.form {
+  &.as-bordered {
+    § p {
+      color: #8E85A4;
+    }
+
+    a {
+      &:hover {
+        color: white;
+      }
+    }
+
+    .control {
+      input {
+        @extend %has-transition;
+        background-color: transparent !important;
+        border: 2px solid $pink;
+        border-radius: 8px;
+        color: white;
+        font-weight: 700;
+
+        &:focus,
+        &:active {
+          border-color: white;
+        }
+      }
+    }
+  }
+
+  .as-buttons {
+    .b-radio {
+      $color: #554C68;
+      @extend %is-full-width;
+
+      h4 {
+        color: white;
+        margin: 0 0 .8rem;
+      }
+
+      input[type="radio"] {
+        -webkit-appearance: none;
+        appearance: none;
+        display: none;
+
+        &:checked {
+          +.control-label .content {
+            background: $color;
+            color: white;
+          }
+        }
+      }
+
+      &:hover,
+      &:active {
+        .control-label .content {
+          background: $color;
+          color: white;
+        }
+      }
+
+      .control-label .content {
+        border: 2px solid $color;
+        text-align: center;
+        color: #8E85A4;
+        border-radius: 16px;
+        padding: 2rem;
+        min-height: 206px;
+      }
+    }
+  }
+}

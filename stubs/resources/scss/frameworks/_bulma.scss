@@ -1,0 +1,67 @@
+/*
+Include parts of Bulma.io
+Ref: https://bulma.io/documentation/overview/modular/
+*/
+
+/**
+* Bulma Extracts
+*/
+
+$primary: $purple-dark;
+$text: #1d1d1d;
+$link: $pink;
+$body-background-color: #F6F5F8;
+$footer-background-color: $purple-dark;
+$footer-padding: 0;
+$family-primary: $default-font;
+$text-strong: inherit;
+$navbar-burger-color: white;
+$gap: 32px;
+$card-radius: 16px;
+$card-background-color: white;
+$breadcrumb-item-color: rgba(#1d1d1d, 0.48);
+$tag-radius: 16px;
+$modal-background-background-color: rgba(black, 0.95);
+$input-radius: 16px;
+$input-border-color: #666;
+$input-color: #666;
+$input-shadow: none;
+$loading-background: $purple-dark;
+$snackbar-background-color: $purple-dark;
+
+/**
+* Bulma Library
+*/
+
+@import 'node_modules/bulma/bulma';
+
+/*
+Bulma Spacers
+Ref: https://bulma.io/documentation/helpers/spacing-helpers/
+*/
+
+@include media-queries('mobile') {
+    .mt-6 {
+        margin-top: 1.5rem !important;
+    }
+
+    .mb-6 {
+        margin-bottom: 1.5rem !important;
+    }
+}
+
+/*
+Bulma Container
+Ref: https://bulma.io/documentation/layout/container/
+*/
+/* @media screen and (min-width: 1500px) {
+    .container:not(.is-max-desktop):not(.is-max-widescreen) {
+        max-width: 1670px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: unset;
+    }
+} */

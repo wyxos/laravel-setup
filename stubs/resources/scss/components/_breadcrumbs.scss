@@ -1,0 +1,55 @@
+/**
+* Bulma Breadcrumbs
+* @see https://bulma.io/documentation/components/breadcrumb/
+*/
+
+.breadcrumb {
+    @extend .has-arrow-separator;
+
+    li {
+        display: inline-flex;
+        font-weight: 600;
+        font-size: 0.9rem;
+
+        &:last-child {
+            a {
+                padding-right: 0;
+            }
+        }
+    }
+
+    a {
+        &:hover {
+            opacity: 0.7;
+            color: inherit;
+        }
+    }
+
+    &.no-seperator {
+
+        ul {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        li {
+            &.image {
+                figure {
+                    background: #E7E5E9;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            &:before {
+                content: none !important;
+            }
+        }
+    }
+
+    @include media-queries('mobile') {
+        font-size: 0.85rem;
+    }
+}

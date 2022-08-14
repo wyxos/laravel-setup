@@ -1,0 +1,9 @@
+readme.md
+vendor
+node_modules
+storage
+public/admin-assets
+public/dashboard-assets
+public/js
+public/css
+*.blade.php

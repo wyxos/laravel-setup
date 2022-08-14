@@ -1,0 +1,10 @@
+/**
+* Main SCSS file
+* @info: Imports all related files and compiled into one app.css
+*/
+
+@import 'abstracts';
+@import 'frameworks';
+@import 'components';
+@import 'layouts';
+@import 'views';

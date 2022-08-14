@@ -1,0 +1,20 @@
+/**
+* Bulma Tags
+* @see https://bulma.io/documentation/elements/tag/
+*/
+
+.tag {
+    font-size: 1rem;
+    font-weight: 700;
+
+    @include media-queries('mobile') {
+        text-align: center;
+        white-space: break-spaces !important;
+        height: auto !important;
+        padding: 1.2rem;
+
+        &.is-large {
+            font-size: 1rem !important;
+        }
+    }
+}

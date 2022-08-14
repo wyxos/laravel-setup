@@ -1,0 +1,10 @@
+/**
+ * Import views specific to project
+ * @info: Please remember to import scss accordingly
+ */
+
+body {
+    &.overflow-hidden {
+        overflow-y: hidden;
+    }
+}

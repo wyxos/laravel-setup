@@ -1,0 +1,8 @@
+release
+dist
+node_modules
+vendor
+public/dashboard-assets
+public/admin-assets
+public/js
+public/css

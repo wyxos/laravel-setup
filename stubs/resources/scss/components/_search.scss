@@ -1,0 +1,52 @@
+/**
+* Global input
+* @see: Homepage
+*/
+
+.global-search {
+    min-width: 40%;
+
+    .control {
+        input {
+            border-color: #E7E5E9;
+            font-size: 1rem;
+            min-height: 48px;
+            color: $text;
+
+            ::-webkit-input-placeholder {
+                color: #8E85A4 !important;
+            }
+
+            ::-moz-placeholder {
+                color: #8E85A4 !important;
+            }
+
+            :-ms-input-placeholder {
+                color: #8E85A4 !important;
+            }
+
+            :-moz-placeholder {
+                color: #8E85A4 !important;
+            }
+        }
+
+        .icon {
+            @extend %has-transition;
+            background: $pink;
+            color: white !important;
+            border-radius: 100%;
+            width: 30px;
+            height: 30px;
+            top: 9px;
+            right: 10px !important;
+
+            i {
+                font-size: 14px;
+            }
+
+            &:hover {
+                background: $violet;
+            }
+        }
+    }
+}

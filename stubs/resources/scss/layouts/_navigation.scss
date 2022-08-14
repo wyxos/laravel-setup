@@ -1,0 +1,56 @@
+/**
+ * #main-navigation
+ * @info: main-container margin is managed via javascript;
+ */
+
+#main-navigation {
+    ul {
+        li {
+            margin: 0 0 .6rem;
+
+            &:last-child {
+                margin: 0;
+            }
+        }
+    }
+
+    a {
+        font-size: 1rem;
+        color: white;
+        border-radius: 12px;
+        padding: .8rem 1rem;
+
+        &.router-link-active {
+            background: #483273;
+            color: white;
+        }
+
+        &.link-dashboard {
+            &.router-link-active {
+                background: none !important;
+                color: inherit !important;
+            }
+
+            &.router-link-exact-active {
+                background: #474f58 !important;
+                color: white !important;
+            }
+        }
+
+        &:hover {
+            background: #483273;
+            color: white;
+        }
+    }
+
+    ul {
+        ul {
+            a {
+                &.router-link-active {
+                    background-color: whitesmoke !important;
+                    color: inherit !important;
+                }
+            }
+        }
+    }
+}

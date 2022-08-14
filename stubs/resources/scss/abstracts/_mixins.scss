@@ -1,0 +1,96 @@
+/**
+* PSEUDO Elements
+* @usage
+*/
+
+@use 'sass:math';
+
+@mixin pseudo($display: block, $pos: absolute, $content: '', $fill: false) {
+    content: $content;
+    display: $display;
+    position: $pos;
+
+    @if $fill {
+        @include size(100%);
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+}
+
+/**
+* Load local fonts
+* @usage
+*/
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: woff2 woff) {
+    $src: null;
+
+    $extmods: (
+        eot: '?',
+        svg: '#' + str-replace($name, ' ', '_'),
+    );
+
+    $formats: (
+        otf: 'opentype',
+        ttf: 'truetype',
+    );
+
+    @each $ext in $exts {
+        $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+        $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+        $src: append($src, url(quote($path + '.' + $extmod)) format(quote($format)), comma);
+    }
+
+    @font-face {
+        font-family: quote($name);
+        font-style: $style;
+        font-weight: $weight;
+        font-display: swap;
+        src: $src;
+    }
+}
+
+/**
+* Set a size
+* @usage @include size(0px);
+*/
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+/**
+* Media Queries
+*/
+@mixin media-queries($size) {
+    @if $size == mobile {
+        @media (max-width: 599px) {
+            @content;
+        }
+    } @else if $size == tablet-portrait {
+        @media (max-width: 820px) {
+            @content;
+        }
+    } @else if $size == tablet-landscape {
+        @media (max-width: 1250px) {
+            @content;
+        }
+    } @else if $size == laptop {
+        @media (max-width: 1344px) {
+            @content;
+        }
+    } @else if $size == desktop {
+        @media (min-width: 1800px) {
+            @content;
+        }
+    }
+}
+
+/**
+* Convert PX to REM
+* @usage font-size: toRem(18);
+*/
+@function toRem($value) {
+    $remValue: math.div($value, 16) + rem;
+    @return $remValue;
+}
