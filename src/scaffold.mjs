@@ -1,35 +1,16 @@
-import inquirer from 'inquirer'
-import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import fse from 'fs-extra'
-import { success, warn } from './helpers.js'
+import { ask, execSyncOut, success, warn, confirm } from './helpers.js'
 
 export default async function setup(){
   const __dirname = dirname(fileURLToPath(import.meta.url))
 
-  const packageJson = {
-    "private": true,
-    "scripts": {
-      "dev": "vite",
-      "build": "vite build"
-    },
-    "devDependencies": {
-      "axios": "latest",
-      "laravel-vite-plugin": "latest",
-      "lodash": "latest",
-      "postcss": "latest",
-      "vite": "latest",
-      "vite-plugin-mkcert": "latest",
-      "@vitejs/plugin-vue": "latest"
-    },
-    "dependencies": {
-    }
-  }
-
   const updateDependencies = (deps, key = 'dependencies') => {
+    let packageJson = JSON.parse(fs.readFileSync(`${projectPath}/package.json`).toString())
+
     warn('adding node dependencies...')
 
     deps.forEach(dep => {
@@ -42,7 +23,7 @@ export default async function setup(){
 
     success('package.json updated')
 
-    writePackageJson()
+    writePackageJson(packageJson)
   }
 
   const addDevDependencies = (deps) => {
@@ -53,46 +34,24 @@ export default async function setup(){
     updateDependencies(deps)
   }
 
-  const writePackageJson = () => {
+  const writePackageJson = (packageJson) => {
     fs.writeFileSync(`${projectPath}/package.json`, JSON.stringify(packageJson, null, 2))
   }
 
-  const ask = async (question, defaultAnswer) => {
-    const { answer } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'answer',
-        default: defaultAnswer,
-        message: question
-      }
-    ])
-
-    return answer
-  }
-
-  const confirm = async (question, defaultAnswer = true) => {
-    const { answer } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'answer',
-        default: defaultAnswer,
-        message: question
-      }
-    ])
-
-    return answer
-  }
-
-  const execSyncOut = (command) => {
-    execSync(command, { stdio: 'inherit' })
-  }
-
   const git = (command) => {
-    return execSync(`git --work-tree="${projectPath}" --git-dir="${projectPath}/.git" ${command}`, { stdio: [] })
+    return execSyncOut(`git --work-tree="${projectPath}" --git-dir="${projectPath}/.git" ${command}`)
   }
 
   const npm = (command) => {
-    return execSync(`npm -C ${projectPath} ${command}`, { stdio: [] })
+    return execSyncOut(`npm -C ${projectPath} ${command}`)
+  }
+
+  const composer = (command) => {
+    return execSyncOut(`composer --working-dir ${projectPath} ${command}`)
+  }
+
+  const artisan = (command) => {
+    return execSyncOut(`php ${projectPath}/artisan ${command}`)
   }
 
   const stageFiles = () => {
@@ -114,7 +73,7 @@ export default async function setup(){
       destination = ''
     }
 
-    source = path.resolve(__dirname, '..', `stubs/${source}`)
+    source = path.resolve(__dirname, `../stubs/${source}`)
 
     destination = `${projectPath}/${destination}`
 
@@ -138,7 +97,7 @@ export default async function setup(){
   function installLaravel () {
     warn('installing Laravel...')
 
-    execSync(`laravel new ${projectName}`, { stdio: [] })
+    execSyncOut(`laravel new ${projectName}`)
   }
 
   const processPath = process.cwd()
@@ -156,18 +115,48 @@ export default async function setup(){
   const npmInstall = await confirm('Run "npm install"?', false)
 
   if (removePath) {
-    execSync(`rm -R ${projectName}`, { stdio: [] })
+    execSyncOut(`rm -R ${projectName}`)
   }
 
   installLaravel()
 
-  warn('Initializing git...')
+// SETUP PROJECT PHP DEPENDENCIES
+
+  warn('initializing git...')
 
   git('init')
 
   if (initialCommit) {
     commit('feat: initial commit')
   }
+
+  composer('require laravel/breeze --dev')
+
+  artisan('breeze:install')
+
+  // execSyncOut(`rm ${projectName}/postcss.config.js`)
+  //
+  // execSyncOut(`rm ${projectName}/tailwind.config.js`)
+
+  composer('require laravel/horizon')
+
+  artisan('horizon:install')
+
+  composer('require laravel/scout')
+
+  artisan('vendor:publish --provider="Laravel\\Scout\\ScoutServiceProvider"')
+
+  composer('require algolia/algoliasearch-client-php')
+
+  composer('require spatie/laravel-permission')
+
+  composer('require spatie/laravel-tags')
+
+  composer('require barryvdh/laravel-debugbar --dev')
+
+  composer('require wyxos/laravel-resources')
+
+  commit('feat: installed php dependencies')
 
   addDevDependencies('laravel-vite-plugin vite-plugin-mkcert @vitejs/plugin-vue'.split(' '))
 
@@ -193,31 +182,7 @@ export default async function setup(){
 
   commit('feat: configured lint')
 
-// SETUP PROJECT PHP DEPENDENCIES
-
-// Install laravel breeze
-
-// Install horizon
-
-// Install scout
-
-// Install sanctum
-
-// Install spatie role
-
-// Install spatie tag
-
-// Install wyxos laravel resources
-
-// SETUP PROJECT NODE DEPENDENCIES
-
-// Install oruga
-
 // SETUP PHP lint
-
-// SETUP Vite UI
-
-// CLEANUP NODE IF WINDOWS
 
   if (npmInstall) {
     npm('i')
@@ -238,6 +203,5 @@ export default async function setup(){
   replaceString('.env', /APP_URL=.*/, `APP_DOMAIN=${projectName}.test\nAPP_URL=https://\${APP_DOMAIN}`)
 
   success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
-
 // SETUP DEV ENVIRONMENT
 }

@@ -8,6 +8,10 @@ import { fileURLToPath } from 'url'
 import { execSync } from 'child_process'
 import { success, warn } from './src/helpers.js'
 
+const execSyncOut = (command) => {
+  execSync(command, { stdio: 'inherit' })
+}
+
 config()
 
 program
@@ -70,15 +74,15 @@ if (options.windows) {
   // trigger homestead reload provision
   warn('reloading homestead...')
 
-  execSync('homestead provision')
+  execSyncOut('homestead provision')
 
   warn('installing dependencies...')
 
-  execSync('npm update --save')
+  execSyncOut('npm update --save')
 
   warn('starting dev server...')
 
-  execSync('npm run dev')
+  execSyncOut('npm run dev')
 
   success('ready!')
 } else {

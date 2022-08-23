@@ -13,7 +13,11 @@ export default defineConfig({
   },
   plugins: [
     laravel({
-      input: ['resources/app/js/main.js'],
+      input: [
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'resources/app/js/main.js'
+      ],
       refresh: true,
     }),
     mkcert(),
