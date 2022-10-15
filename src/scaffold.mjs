@@ -146,7 +146,7 @@ export default async function setup(){
 
   execSyncOut(`rm ${projectName}/composer.lock`)
 
-  appendFile('.gitignore', '/package-lock.json')
+  appendFile('.gitignore', '\n/package-lock.json')
 
   appendFile('.gitignore', '/composer.lock')
 
