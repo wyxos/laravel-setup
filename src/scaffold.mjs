@@ -144,7 +144,13 @@ export default async function setup(){
 
   installLaravel()
 
-// SETUP PROJECT PHP DEPENDENCIES
+  execSyncOut(`rm ${projectName}/package-lock.json`)
+
+  execSyncOut(`rm ${projectName}/composer.lock`)
+
+  appendFile('.gitignore', '/package-lock.json')
+
+  appendFile('.gitignore', '/composer.lock')
 
   warn('initializing git...')
 
@@ -189,6 +195,8 @@ export default async function setup(){
   commit('feat: configured ui')
 
   copy('resources')
+
+  copy('config')
 
   addDevDependencies([
     {'@wyxos/vue-3-helpers': 'github:wyxos/vue-3-helpers'},
@@ -241,5 +249,4 @@ export default async function setup(){
   commit('feat: release script')
 
   success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
-// SETUP DEV ENVIRONMENT
 }
