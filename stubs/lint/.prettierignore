@@ -1,9 +1,7 @@
 readme.md
+public/build
 vendor
 node_modules
+bootstrap/cache
 storage
-public/admin-assets
-public/dashboard-assets
-public/js
-public/css
 *.blade.php
