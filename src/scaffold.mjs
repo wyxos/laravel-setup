@@ -144,8 +144,6 @@ export default async function setup(){
 
   installLaravel()
 
-  execSyncOut(`rm ${projectName}/package-lock.json`)
-
   execSyncOut(`rm ${projectName}/composer.lock`)
 
   appendFile('.gitignore', '/package-lock.json')
