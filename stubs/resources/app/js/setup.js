@@ -1,5 +1,6 @@
 import './bootstrap';
-import '../scss/app.scss'
+// import '../scss/app.scss'
+import '../css/app.css'
 import {createApp} from 'vue/dist/vue.esm-bundler'
 import plugins from "./plugins";
 
