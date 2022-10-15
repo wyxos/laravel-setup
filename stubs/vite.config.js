@@ -7,19 +7,11 @@ export default defineConfig({
   server: {
     https: true,
     hmr: {
-      host: '192.168.10.1',
+      host: '127.0.0.1'
     },
-    host: '192.168.10.1'
+    host: '127.0.0.1'
   },
   plugins: [
-    laravel({
-      input: [
-        'resources/css/app.css',
-        'resources/js/app.js',
-        'resources/app/js/main.js'
-      ],
-      refresh: true,
-    }),
     mkcert(),
     vue({
       template: {
@@ -38,6 +30,14 @@ export default defineConfig({
           includeAbsolute: false,
         },
       },
+    }),
+    laravel({
+      input: [
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'resources/app/js/main.js'
+      ],
+      refresh: true,
     }),
   ],
 });

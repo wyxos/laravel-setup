@@ -100,6 +100,30 @@ export default async function setup(){
     execSyncOut(`laravel new ${projectName}`)
   }
 
+  function addScripts(scripts){
+    let packageJson = JSON.parse(fs.readFileSync(`${projectPath}/package.json`).toString())
+
+    warn('adding scripts...')
+
+    scripts.forEach(script => {
+      packageJson.scripts[Object.keys(script)[0]] = Object.values(script)[0]
+    })
+
+    success('package.json updated')
+
+    writePackageJson(packageJson)
+  }
+
+  function addAppVersion(){
+    let packageJson = JSON.parse(fs.readFileSync(`${projectPath}/package.json`).toString())
+
+    packageJson.version = '1.0.0.alpha.1'
+
+    success('package.json updated')
+
+    writePackageJson(packageJson)
+  }
+
   const processPath = process.cwd()
 
   const projectName = await ask('Name of the project?', 'my-app')
@@ -134,10 +158,6 @@ export default async function setup(){
 
   artisan('breeze:install')
 
-  // execSyncOut(`rm ${projectName}/postcss.config.js`)
-  //
-  // execSyncOut(`rm ${projectName}/tailwind.config.js`)
-
   composer('require laravel/horizon')
 
   artisan('horizon:install')
@@ -162,9 +182,9 @@ export default async function setup(){
 
   copy('vite.config.js')
 
-  commit('feat: configured vite')
+  commit('feat: vite configuration')
 
-  addDevDependencies('vue @oruga-ui/oruga-next @oruga-ui/theme-bulma sass sass-loader'.split(' '))
+  addDevDependencies('vue @oruga-ui/oruga-next'.split(' '))
 
   commit('feat: configured ui')
 
@@ -179,6 +199,12 @@ export default async function setup(){
   addDevDependencies('eslint eslint-config-prettier eslint-config-standard eslint-plugin-import eslint-plugin-json eslint-plugin-n eslint-plugin-node eslint-plugin-promise eslint-plugin-vue prettier @prettier/plugin-php'.split(' '))
 
   copy('lint', '/')
+
+  addScripts([
+    {'lint:js' : 'eslint . --fix --ext .js,.vue,.json && prettier --write **/*{.js,.vue,.json}'},
+    {'lint:php' : 'prettier --config .prettierrc.php.json **/*.php --write --ignore-unknown'},
+    {'lint' : 'npm run lint:js && npm run lint:php'}
+  ])
 
   commit('feat: configured lint')
 
@@ -201,6 +227,18 @@ export default async function setup(){
   commit('feat: secure session + test route')
 
   replaceString('.env', /APP_URL=.*/, `APP_DOMAIN=${projectName}.test\nAPP_URL=https://\${APP_DOMAIN}`)
+
+  addDevDependencies(['chalk', 'inquirer'])
+
+  copy('release.mjs')
+
+  addScripts([
+    {'release' : 'node release.mjs'},
+  ])
+
+  addAppVersion()
+
+  commit('feat: release script')
 
   success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
 // SETUP DEV ENVIRONMENT
