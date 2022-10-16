@@ -233,6 +233,8 @@ export default async function setup(){
   commit('feat: secure session + test route')
 
   replaceString('.env', /APP_URL=.*/, `APP_DOMAIN=${projectName}.test\nAPP_URL=https://\${APP_DOMAIN}`)
+  replaceString('.env', /DB_USERNAME=.*/, `DB_USERNAME=homestead`)
+  replaceString('.env', /DB_PASSWORD=.*/, `DB_PASSWORD=secret`)
 
   addDevDependencies(['chalk', 'inquirer'])
 
