@@ -35,7 +35,8 @@ export default defineConfig({
       input: [
         'resources/css/app.css',
         'resources/js/app.js',
-        'resources/app/js/main.js'
+        'resources/app/js/main.js',
+        'resources/admin/js/main.js'
       ],
       refresh: true,
     }),
