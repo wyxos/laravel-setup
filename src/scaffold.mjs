@@ -148,7 +148,7 @@ export default async function setup(){
 
   appendFile('.gitignore', '\n/package-lock.json')
 
-  appendFile('.gitignore', '/composer.lock')
+  appendFile('.gitignore', '\n/composer.lock')
 
   warn('initializing git...')
 
