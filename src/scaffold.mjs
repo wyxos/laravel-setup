@@ -4,6 +4,7 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import fse from 'fs-extra'
 import { ask, execSyncOut, success, warn, confirm } from './helpers.js'
+import { execSync } from 'child_process'
 
 export default async function setup(){
   const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -232,9 +233,17 @@ export default async function setup(){
 
   commit('feat: secure session + test route')
 
+  copy('database')
+
   replaceString('.env', /APP_URL=.*/, `APP_DOMAIN=${projectName}.test\nAPP_URL=https://\${APP_DOMAIN}`)
   replaceString('.env', /DB_USERNAME=.*/, `DB_USERNAME=homestead`)
   replaceString('.env', /DB_PASSWORD=.*/, `DB_PASSWORD=secret`)
+
+  const databaseName = projectName.replace(/-/g, '_')
+
+  execSyncOut(`mysql -u homestead -e "create database ${databaseName} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" || echo "database already exists."`)
+
+  artisan('migrate:fresh --seed')
 
   addDevDependencies(['chalk', 'inquirer'])
 
