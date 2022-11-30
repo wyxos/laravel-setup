@@ -15,11 +15,14 @@ const execSyncOut = (command) => {
 config()
 
 program
+  .argument('<homestead>', 'Homestead yaml path', 'C:/homestead/Homestead.yaml')
   .option('--windows', 'flag to alter host file and yaml on Windows')
 
 program.parse()
 
 const options = program.opts()
+
+const args = program.args
 
 if (options.windows) {
   const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -52,7 +55,7 @@ if (options.windows) {
     fs.writeFileSync(path.resolve(projectPath, location), data)
   }
 
-  let yamlPath = path.resolve('C:/homestead/Homestead.yaml')
+  let yamlPath = path.resolve(args.homestead)
 
   let domain = process.env.APP_DOMAIN
 

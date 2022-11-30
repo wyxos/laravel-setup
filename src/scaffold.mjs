@@ -175,7 +175,11 @@ export default async function setup(){
 
   composer('require spatie/laravel-permission')
 
+  artisan('vendor:publish --provider="Spatie\\Permission\\PermissionServiceProvider"')
+
   composer('require spatie/laravel-tags')
+
+  artisan('vendor:publish --provider="Spatie\\Tags\\TagsServiceProvider" --tag="tags-migrations"')
 
   composer('require barryvdh/laravel-debugbar --dev')
 
