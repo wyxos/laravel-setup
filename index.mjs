@@ -55,7 +55,7 @@ if (options.windows) {
     fs.writeFileSync(path.resolve(projectPath, location), data)
   }
 
-  let yamlPath = path.resolve(args.homestead)
+  let yamlPath = path.resolve(args[0])
 
   let domain = process.env.APP_DOMAIN
 
