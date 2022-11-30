@@ -15,7 +15,7 @@ const execSyncOut = (command) => {
 config()
 
 program
-  .argument('<homestead>', 'Homestead yaml path', 'C:/homestead/Homestead.yaml')
+  .argument('[homestead]', 'Homestead yaml path', 'C:/homestead/Homestead.yaml')
   .option('--windows', 'flag to alter host file and yaml on Windows')
 
 program.parse()
