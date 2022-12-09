@@ -1,14 +1,15 @@
 import './bootstrap';
 import '../css/app.css'
-import {createApp} from 'vue/dist/vue.esm-bundler'
-import plugins from "./plugins";
+import {createApp} from 'vue'
+import plugins from "./plugins"
+import components from './components'
 
 export default function setup(element) {
     const app = createApp(element)
 
-    plugins.forEach(plugin => {
-        app.use(plugin[0], plugin[1])
-    })
+    plugins(app)
+
+    components(app)
 
     app.mount('#app');
 }
