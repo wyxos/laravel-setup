@@ -193,7 +193,7 @@ export default async function setup(){
 
   commit('feat: vite configuration')
 
-  addDevDependencies('vue vue-router @oruga-ui/oruga-next @tailwindcss/forms @tailwindcss/nesting @tailwindcss/typography vue-inline-svg'.split(' '))
+  addDevDependencies('vue vue-router @oruga-ui/oruga-next @tailwindcss/forms @tailwindcss/nesting @tailwindcss/typography vue-inline-svg @tailwindcss/nesting postcss-import'.split(' '))
 
   commit('feat: configured ui')
 
