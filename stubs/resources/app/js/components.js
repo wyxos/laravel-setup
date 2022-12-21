@@ -1,7 +1,11 @@
+import { WyxosButton, WyxosForm, WyxosImage, WyxosInput, WyxosTags } from '@wyxos/vue-3-helpers'
 import InlineSvg from 'vue-inline-svg'
-import { WyxosButton } from '@wyxos/vue-3-helpers'
 
 export default function components(app){
-  app.component('InlineSvg', InlineSvg)
   app.component('WyxosButton', WyxosButton)
+  app.component('WyxosForm', WyxosForm)
+  app.component('WyxosTags', WyxosTags)
+  app.component('WyxosInput', WyxosInput)
+  app.component('WyxosImage', WyxosImage)
+  app.component('InlineSvg', InlineSvg)
 }

@@ -207,7 +207,7 @@ export default async function setup(){
 
   commit('feat: resources structure')
 
-  addDevDependencies('eslint eslint-config-prettier eslint-config-standard eslint-plugin-import eslint-plugin-json eslint-plugin-n eslint-plugin-node eslint-plugin-promise eslint-plugin-vue prettier @prettier/plugin-php'.split(' '))
+  addDevDependencies('eslint eslint-config-prettier eslint-config-standard eslint-plugin-import eslint-plugin-json eslint-plugin-n eslint-plugin-node eslint-plugin-promise eslint-plugin-vue prettier @prettier/plugin-php vite-plugin-eslint'.split(' '))
 
   copy('lint', '/')
 
