@@ -151,6 +151,8 @@ export default async function setup(){
 
   appendFile('.gitignore', '/composer.lock\n')
 
+  appendFile('.gitignore', '/.env.testing\n')
+
   warn('initializing git...')
 
   git('init')
@@ -183,7 +185,7 @@ export default async function setup(){
 
   composer('require barryvdh/laravel-debugbar --dev')
 
-  composer('require wyxos/laravel-resources')
+  composer('require wyxos/laravel-resources wyxos/laravel-listing')
 
   commit('feat: installed php dependencies')
 
@@ -193,7 +195,7 @@ export default async function setup(){
 
   commit('feat: vite configuration')
 
-  addDevDependencies('vue vue-router @oruga-ui/oruga-next @tailwindcss/forms @tailwindcss/nesting @tailwindcss/typography vue-inline-svg @tailwindcss/nesting postcss-import'.split(' '))
+  addDevDependencies('vue vue-router @oruga-ui/oruga-next @tailwindcss/forms @tailwindcss/typography vue-inline-svg @tailwindcss/nesting postcss-import'.split(' '))
 
   commit('feat: configured ui')
 
@@ -260,6 +262,12 @@ export default async function setup(){
   addAppVersion()
 
   commit('feat: release script')
+
+  execSyncOut(`cp ${projectName}/.env ${projectName}/.env.testing`)
+
+  replaceString('.env.testing', /DB_DATABASE=.*/, `DB_DATABASE=testing`)
+  replaceString('.env.testing', /DB_USERNAME=.*/, `DB_USERNAME=homestead`)
+  replaceString('.env.testing', /DB_PASSWORD=.*/, `DB_PASSWORD=secret`)
 
   success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
 }
