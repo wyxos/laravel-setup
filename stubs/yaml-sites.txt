@@ -1,4 +1,0 @@
-sites:
-    ### Laravel Setup Sites: START ###
-    ${SITES}
-    ### Laravel Setup Sites: END ###
