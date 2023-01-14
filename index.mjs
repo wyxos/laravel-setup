@@ -78,7 +78,7 @@ if (options.windows) {
   if(!fileContains(yamlPath, database)){
     appendAfter(yamlPath, 'databases:', [
       site,
-      `    - task_tracker`
+      `    - ${database}`
     ])
 
     success('added database to yaml.')
