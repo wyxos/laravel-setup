@@ -1,4 +1,4 @@
-import setup from './setup'
+import setup from './core/setup'
 
 setup({
   mounted() {

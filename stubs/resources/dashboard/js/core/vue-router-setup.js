@@ -1,5 +1,5 @@
 import * as VueRouter from 'vue-router'
-import routes from "./routes";
+import routes from "../routes";
 
 // 2. Define some routes
 // Each route should map to a component.

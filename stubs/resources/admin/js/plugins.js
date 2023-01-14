@@ -1,7 +1,9 @@
 import Oruga from '@oruga-ui/oruga-next'
-import router from './vue-router-setup'
+import router from './core/vue-router-setup'
+import VueHelpers from '@wyxos/vue-3-helpers'
 
 export default function plugins (app) {
   app.use(Oruga, { iconPack: 'fas' })
   app.use(router)
+  app.use(VueHelpers)
 }
