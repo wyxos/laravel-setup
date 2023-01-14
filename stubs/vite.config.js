@@ -9,7 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       vue: path.resolve(__dirname, 'node_modules/vue/dist/vue.esm-bundler.js'),
-      '@app': path.resolve(__dirname, 'resources/app/js'),
+      '@app': path.resolve(__dirname, 'resources/dashboard/js'),
       '@admin': path.resolve(__dirname, 'resources/admin/js'),
       '@common': path.resolve(__dirname, 'resources/common/js'),
       '@svg': path.resolve(__dirname, 'resources/svgs'),
@@ -46,7 +46,7 @@ export default defineConfig({
       input: [
         'resources/css/app.css',
         'resources/js/app.js',
-        'resources/app/js/main.js',
+        'resources/dashboard/js/main.js',
         'resources/admin/js/main.js'
       ],
       refresh: true,

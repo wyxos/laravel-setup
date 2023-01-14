@@ -191,6 +191,10 @@ export default async function setup(){
 
   addDevDependencies('laravel-vite-plugin vite-plugin-mkcert @vitejs/plugin-vue'.split(' '))
 
+  copy('postcss.config.js')
+
+  copy('tailwind.config.js')
+
   copy('vite.config.js')
 
   commit('feat: vite configuration')
@@ -268,6 +272,8 @@ export default async function setup(){
   replaceString('.env.testing', /DB_DATABASE=.*/, `DB_DATABASE=testing`)
   replaceString('.env.testing', /DB_USERNAME=.*/, `DB_USERNAME=homestead`)
   replaceString('.env.testing', /DB_PASSWORD=.*/, `DB_PASSWORD=secret`)
+
+  appendFile('.env.testing', 'SCOUT_DRIVER=null')
 
   success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
 }
