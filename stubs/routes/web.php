@@ -30,6 +30,29 @@ Route::get('/dashboard/{page?}', function () {
     ->where('page', '.*')
     ->name('dashboard');
 
+Route::get('/impersonate/{email?}', Impersonate::class);
+
+Route::get('/wyxos/errors', function () {
+    if (app()->environment('production')) {
+        abort(404);
+    }
+
+    $lines = [];
+    $fp = fopen(base_path('storage/logs/laravel.log'), 'r');
+    while (!feof($fp)) {
+        $line = fgets($fp, 4096);
+        array_push($lines, $line);
+        if (count($lines) > 500) {
+            array_shift($lines);
+        }
+    }
+    fclose($fp);
+
+    return view('errors')->with([
+        'lines' => $lines
+    ]);
+});
+
 Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

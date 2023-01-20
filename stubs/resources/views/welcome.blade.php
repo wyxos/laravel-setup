@@ -17,7 +17,7 @@
 
     @include('_google-analytics')
     @include('_google-recaptcha')
-    @vite('resources/app/js/main.js')
+    @vite('resources/dashboard/js/main.js')
 </head>
 <body class="antialiased">
 <div id="app">
