@@ -19,9 +19,6 @@
 </head>
 <body class="antialiased">
 <div id="app">
-    <h1>Your admin is ready</h1>
-    <p>Build something awesome!</p>
-    <o-button class="p-4 bg-blue-500 text-slate-200" @click="helloWorld()">Click me</o-button>
 </div>
 </body>
 </html>

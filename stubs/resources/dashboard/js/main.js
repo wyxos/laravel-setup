@@ -1,12 +1,4 @@
 import setup from './core/setup'
+import App from './App.vue'
 
-setup({
-  mounted() {
-    window.axios.get('/api/test')
-  },
-  methods: {
-    helloWorld() {
-      alert('Hello World!')
-    }
-  }
-})
+setup(App)
