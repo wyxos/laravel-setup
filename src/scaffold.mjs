@@ -274,6 +274,8 @@ export default async function setup(){
   replaceString('.env.testing', /DB_PASSWORD=.*/, `DB_PASSWORD=secret`)
 
   appendFile('.env.testing', 'SCOUT_DRIVER=null')
+  appendFile('.env.testing', 'SANCTUM_STATEFUL_DOMAINS=${APP_DOMAIN}')
+  appendFile('.env.testing', 'SESSION_DOMAIN=.${APP_DOMAIN}')
 
   success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
 }
