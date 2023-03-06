@@ -257,10 +257,8 @@ export default async function setup(){
 
   addDevDependencies(['chalk', 'inquirer'])
 
-  copy('release.mjs')
-
   addScripts([
-    {'release' : 'node release.mjs'},
+    {'release' : 'npx wyxos/laravel-release'},
   ])
 
   addAppVersion()
@@ -276,6 +274,7 @@ export default async function setup(){
   appendFile('.env.testing', 'SCOUT_DRIVER=null')
   appendFile('.env.testing', 'SANCTUM_STATEFUL_DOMAINS=${APP_DOMAIN}')
   appendFile('.env.testing', 'SESSION_DOMAIN=.${APP_DOMAIN}')
+  appendFile('.env.testing', 'DEBUGBAR_ENABLED=false')
 
   success('scaffold complete. If you are on Windows, run npx wyxos/laravel-setup --windows to update your yaml and hosts.')
 }
