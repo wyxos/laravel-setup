@@ -165,6 +165,8 @@ export default async function setup(){
 
   artisan('breeze:install')
 
+  copy('routes')
+
   composer('require laravel/horizon')
 
   artisan('horizon:install')
