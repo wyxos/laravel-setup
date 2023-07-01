@@ -187,7 +187,7 @@ export default async function setup(){
 
   composer('require barryvdh/laravel-debugbar --dev')
 
-  composer('require wyxos/laravel-resources wyxos/laravel-listing')
+  composer('require wyxos/harmonie')
 
   commit('feat: installed php dependencies')
 
@@ -210,7 +210,7 @@ export default async function setup(){
   copy('config')
 
   addDevDependencies([
-    {'@wyxos/vue-3-helpers': 'github:wyxos/vue-3-helpers'},
+    {'@wyxos/vision': 'github:wyxos/vision'},
   ])
 
   commit('feat: resources structure')
