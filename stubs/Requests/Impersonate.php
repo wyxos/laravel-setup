@@ -6,9 +6,6 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Wyxos\Harmonie\Resource\FormRequest;
-use function App\Http\Requests\abort;
-use function App\Http\Requests\app;
-use function App\Http\Requests\redirect;
 
 class Impersonate extends FormRequest
 {
