@@ -161,6 +161,8 @@ export default async function setup(){
     commit('feat: initial commit')
   }
 
+  composer('require wyxos/harmonie')
+
   composer('require laravel/breeze --dev')
 
   artisan('breeze:install')
@@ -188,8 +190,6 @@ export default async function setup(){
   artisan('vendor:publish --provider="Spatie\\Tags\\TagsServiceProvider" --tag="tags-migrations"')
 
   composer('require barryvdh/laravel-debugbar --dev')
-
-  composer('require wyxos/harmonie')
 
   commit('feat: installed php dependencies')
 
