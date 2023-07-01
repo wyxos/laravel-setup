@@ -30,7 +30,7 @@ Route::get('/dashboard/{page?}', function () {
     ->where('page', '.*')
     ->name('dashboard');
 
-Route::get('/impersonate/{email?}', Impersonate::class);
+Route::get('/impersonate/{email?}', App\Http\Requests\Impersonate::class);
 
 Route::get('/wyxos/errors', function () {
     if (app()->environment('production')) {

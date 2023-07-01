@@ -167,6 +167,8 @@ export default async function setup(){
 
   copy('routes')
 
+  copy('Requests', 'app/Http')
+
   composer('require laravel/horizon')
 
   artisan('horizon:install')
