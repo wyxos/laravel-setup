@@ -87,7 +87,7 @@ if (options.windows) {
   const hostPath = path.resolve('C:/Windows/System32/drivers/etc/hosts')
 
   if(!fileContains(hostPath, domain)){
-    fs.appendFileSync(hostPath, `\n192.168.10.10 ${domain}`)
+    fs.appendFileSync(hostPath, `\n192.168.56.56 ${domain}`)
   }
 
   success('hosts updated.')
