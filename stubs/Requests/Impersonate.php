@@ -1,6 +1,6 @@
 <?php
 
-namespace Requests;
+namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
