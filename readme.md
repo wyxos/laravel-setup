@@ -1,4 +1,12 @@
-## Laravel Setup
+# Laravel Setup (Deprecated)
+
+This script is deprecated and no longer maintained. Please use the new `@wyxos/vision` package for scaffolding Laravel projects.
+
+## New Package: @wyxos/vision
+
+The package `@wyxos/vision` provides enhanced functionality for setting up Laravel projects, including UI and backend scaffolding.
+
+## Usage
 
 A script to scaffold a Laravel project with the following:
 - UI
